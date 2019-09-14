@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("MkvSubtitleBatchTool")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Mkv Subtitle Batch Tool")]
+[assembly: AssemblyDescription("MKV字幕批量提取与嵌入工具")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("MkvSubtitleBatchTool")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2019")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Chishin")]
+[assembly: AssemblyProduct("Mkv Subtitle Batch Tool")]
+[assembly: AssemblyCopyright("Copyright © Chishin 2019")]
+[assembly: AssemblyTrademark("MkvSubtitleBatchTool")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.0.0.1")]
+[assembly: AssemblyFileVersion("0.0.0.1")]
