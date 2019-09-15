@@ -19,16 +19,16 @@ namespace MkvSubtitleBatchTool
             p_OutputDataReceived = outputDataReceived;
         }
 
-        public CmdHelper(DataReceivedEventHandler outputDataReceived, DataReceivedEventHandler errorDataReceived)
-        {
-            p_OutputDataReceived = outputDataReceived;
-            p_ErrorDataReceived = errorDataReceived;
-        }
-
         public CmdHelper(DataReceivedEventHandler outputDataReceived, EventHandler exitedHandler)
         {
             p_OutputDataReceived = outputDataReceived;
             CmdProcess_Exited = exitedHandler;
+        }
+
+        public CmdHelper(DataReceivedEventHandler outputDataReceived, DataReceivedEventHandler errorDataReceived, EventHandler exitedHandler)
+        {
+            p_OutputDataReceived = outputDataReceived;
+            p_ErrorDataReceived = errorDataReceived;
         }
 
         #endregion
