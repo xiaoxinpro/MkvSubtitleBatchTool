@@ -17,6 +17,7 @@ namespace MkvSubtitleBatchTool
         /// 当前目录含"\"
         /// </summary>
         private string MainPath;
+        private Mkvinfo ObjMkvinfo;
 
         #region 初始化相关
         /// <summary>
@@ -26,6 +27,7 @@ namespace MkvSubtitleBatchTool
         {
             InitializeComponent();
             MainPath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            ObjMkvinfo = new Mkvinfo(GetMkvinfoDoneCallback);
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace MkvSubtitleBatchTool
         {
             this.Text += @" V" + Application.ProductVersion.ToString();
 
-            InitFileListView(listViewTrack);
+            InitTrackListView(listViewTrack);
         }
         #endregion
 
@@ -46,7 +48,7 @@ namespace MkvSubtitleBatchTool
         /// 初始化列表
         /// </summary>
         /// <param name="listView"></param>
-        private void InitFileListView(ListView listView)
+        private void InitTrackListView(ListView listView)
         {
             //基本属性设置
             listView.Clear();
@@ -57,12 +59,38 @@ namespace MkvSubtitleBatchTool
             listView.View = View.Details;
 
             //创建列表头
-            listView.Columns.Add("序号", 60, HorizontalAlignment.Center);
-            listView.Columns.Add("文件名称", 100, HorizontalAlignment.Left);
-            listView.Columns.Add("文件路径", 300, HorizontalAlignment.Left);
+            listView.Columns.Add("轨道ID", 60, HorizontalAlignment.Center);
+            listView.Columns.Add("类型", 80, HorizontalAlignment.Left);
+            listView.Columns.Add("编码格式", 130, HorizontalAlignment.Left);
+            listView.Columns.Add("语言", 50, HorizontalAlignment.Left);
+            listView.Columns.Add("默认", 50, HorizontalAlignment.Left);
+            listView.Columns.Add("名称", 100, HorizontalAlignment.Left);
 
             //自动列宽
-            listView.Columns[2].Width = -2;//根据标题设置宽度
+            listView.Columns[5].Width = -2;//根据标题设置宽度
+        }
+
+        /// <summary>
+        /// 添加数据到轨道列表中
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="track"></param>
+        private void AddTrackListView(ListView listView, params MkvinfoTrack[] track)
+        {
+            listView.BeginUpdate();
+            foreach (MkvinfoTrack item in track)
+            {
+                ListViewItem listViewItem = new ListViewItem();
+                listViewItem.Text = item.TrackID.ToString();
+                listViewItem.SubItems.Add(item.TrackType);
+                listViewItem.SubItems.Add(item.CodecID);
+                listViewItem.SubItems.Add(item.Language);
+                listViewItem.SubItems.Add(item.IsDefault.ToString());
+                listViewItem.SubItems.Add(item.Name);
+                listViewItem.Checked = true;
+                listView.Items.Add(listViewItem);
+            }
+            listView.EndUpdate();
         }
         #endregion
 
@@ -75,10 +103,27 @@ namespace MkvSubtitleBatchTool
         /// <param name="e"></param>
         private void btnMixedFlow_Click(object sender, EventArgs e)
         {
-            Mkvinfo mkvinfo = new Mkvinfo();
-            mkvinfo.Get(MainPath + @"video\max.mkv");
+            ObjMkvinfo.Get(MainPath + @"video\max.mkv");
         }
 
+        #endregion
+
+        #region MKV信息获取
+        /// <summary>
+        /// 获取MKV信息回调函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GetMkvinfoDoneCallback(object sender, EventArgs e)
+        {
+            Mkvinfo mkvinfo = (Mkvinfo)sender;
+            Invoke(new Action(() =>
+            {
+                txtPath.Text = mkvinfo.FilePath;
+                InitTrackListView(listViewTrack);
+                AddTrackListView(listViewTrack, mkvinfo.Tracks);
+            }));
+        }
         #endregion
 
     }

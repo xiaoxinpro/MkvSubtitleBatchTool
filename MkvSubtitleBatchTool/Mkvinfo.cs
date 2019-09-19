@@ -23,11 +23,22 @@ namespace MkvSubtitleBatchTool
         #endregion
 
         #region 构造函数
-        public Mkvinfo()
+        public Mkvinfo(DelegateGetMkvinfoDone e)
         {
             ShellPath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"mkvtoolnix\mkvinfo.exe";
             Cmd = new CmdHelper(p_OutputDataReceived, CmdProcess_Exited);
             sbTreak = new StringBuilder();
+            EventGetMkvinfoDone += e;
+        }
+
+        #endregion
+
+        #region 委托获取完成事件
+        public delegate void DelegateGetMkvinfoDone(object sender, EventArgs e);
+        public DelegateGetMkvinfoDone EventGetMkvinfoDone;
+        private void ActionGetMkvinfoDone()
+        {
+            EventGetMkvinfoDone?.Invoke(this, new EventArgs());
         }
 
         #endregion
@@ -93,6 +104,7 @@ namespace MkvSubtitleBatchTool
                 listTrack.Add(new MkvinfoTrack(arrTrack[i]));
             }
             Tracks = listTrack.ToArray();
+            ActionGetMkvinfoDone();
         }
         #endregion
     }
@@ -106,6 +118,7 @@ namespace MkvSubtitleBatchTool
         public int TrackID { get; set; }
         public decimal TrackUID { get; set; }
         public string TrackType { get; set; }
+        public bool IsDefault { get; set; }
         public string CodecID { get; set; }
         public string Language { get; set; }
         public string Name { get; set; }
@@ -116,6 +129,7 @@ namespace MkvSubtitleBatchTool
             TrackID = Convert.ToInt32(Regex.Match(strTrack, @"(?<=mkvextract:\s+)\d+").Value);
             TrackUID = Convert.ToDecimal(Regex.Match(strTrack, @"(?<=Track UID:\s+)\d+").Value);
             TrackType = Regex.Match(strTrack, @"(?<=Track\stype:\s+)\w+").Value.ToString();
+            IsDefault = !Regex.IsMatch(strTrack, @"Default\strack\sflag:\s0");
             CodecID = Regex.Match(strTrack, @"(?<=Codec\sID:\s+)[\w\/]+").Value.ToString();
             Language = Regex.Match(strTrack, @"(?<=Language:\s+)\w+").Value.ToString();
             Name = Regex.Match(strTrack, @"(?<=Name:\s+)[\S]+").Value.ToString();
