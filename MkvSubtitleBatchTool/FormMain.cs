@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
+using System.IO;
 
 namespace MkvSubtitleBatchTool
 {
@@ -97,13 +98,43 @@ namespace MkvSubtitleBatchTool
         #region 窗体控件相关
 
         /// <summary>
+        /// 打开文件按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            string filePath = txtPath.Text.Trim();
+            if (!File.Exists(filePath) || ObjMkvinfo.FilePath == filePath)
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();//打开文件对话框
+                openFileDialog.Filter = "MKV文件(*.mkv)|*.mkv|所有文件(*.*)|*.*";
+                openFileDialog.RestoreDirectory = true;//对话框关闭时恢复原目录
+                openFileDialog.Title = "打开MKV文件";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName.Trim();
+                    txtPath.Text = filePath;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            Button button = (Button)sender;
+            button.Enabled = false;
+            button.Text = "加载中";
+            ObjMkvinfo.Get(filePath);
+        }
+
+        /// <summary>
         /// 混流按钮事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnMixedFlow_Click(object sender, EventArgs e)
         {
-            ObjMkvinfo.Get(MainPath + @"video\max.mkv");
+
         }
 
         #endregion
@@ -119,7 +150,8 @@ namespace MkvSubtitleBatchTool
             Mkvinfo mkvinfo = (Mkvinfo)sender;
             Invoke(new Action(() =>
             {
-                txtPath.Text = mkvinfo.FilePath;
+                btnOpenFile.Enabled = true;
+                btnOpenFile.Text = "打开文件";
                 InitTrackListView(listViewTrack);
                 AddTrackListView(listViewTrack, mkvinfo.Tracks);
             }));

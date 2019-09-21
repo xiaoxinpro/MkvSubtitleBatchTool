@@ -34,8 +34,8 @@
             this.listViewTrack = new System.Windows.Forms.ListView();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageSimpleFile = new System.Windows.Forms.TabPage();
-            this.tabPageBatchFile = new System.Windows.Forms.TabPage();
             this.btnMixedFlow = new System.Windows.Forms.Button();
+            this.tabPageBatchFile = new System.Windows.Forms.TabPage();
             this.tabControlMain.SuspendLayout();
             this.tabPageSimpleFile.SuspendLayout();
             this.SuspendLayout();
@@ -48,6 +48,8 @@
             this.txtPath.Name = "txtPath";
             this.txtPath.Size = new System.Drawing.Size(416, 21);
             this.txtPath.TabIndex = 0;
+            this.txtPath.Text = "C:\\Workspace\\C#\\MkvSubtitleBatchTool\\MkvSubtitleBatchTool\\bin\\Debug\\video\\max.mkv" +
+    "";
             // 
             // btnOpenFile
             // 
@@ -58,6 +60,7 @@
             this.btnOpenFile.TabIndex = 2;
             this.btnOpenFile.Text = "打开文件";
             this.btnOpenFile.UseVisualStyleBackColor = true;
+            this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
             // 
             // label1
             // 
@@ -110,16 +113,6 @@
             this.tabPageSimpleFile.Text = "单文件处理";
             this.tabPageSimpleFile.UseVisualStyleBackColor = true;
             // 
-            // tabPageBatchFile
-            // 
-            this.tabPageBatchFile.Location = new System.Drawing.Point(4, 22);
-            this.tabPageBatchFile.Name = "tabPageBatchFile";
-            this.tabPageBatchFile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageBatchFile.Size = new System.Drawing.Size(571, 332);
-            this.tabPageBatchFile.TabIndex = 1;
-            this.tabPageBatchFile.Text = "批量处理";
-            this.tabPageBatchFile.UseVisualStyleBackColor = true;
-            // 
             // btnMixedFlow
             // 
             this.btnMixedFlow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -130,6 +123,16 @@
             this.btnMixedFlow.Text = "混流";
             this.btnMixedFlow.UseVisualStyleBackColor = true;
             this.btnMixedFlow.Click += new System.EventHandler(this.btnMixedFlow_Click);
+            // 
+            // tabPageBatchFile
+            // 
+            this.tabPageBatchFile.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBatchFile.Name = "tabPageBatchFile";
+            this.tabPageBatchFile.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBatchFile.Size = new System.Drawing.Size(571, 332);
+            this.tabPageBatchFile.TabIndex = 1;
+            this.tabPageBatchFile.Text = "批量处理";
+            this.tabPageBatchFile.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
