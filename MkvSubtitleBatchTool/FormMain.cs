@@ -256,5 +256,19 @@ namespace MkvSubtitleBatchTool
                 }
             }
         }
+
+        /// <summary>
+        /// 刷新按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemReload_Click(object sender, EventArgs e)
+        {
+            Button button = btnOpenFile;
+            button.Enabled = false;
+            button.Text = "加载中";
+            listViewTrack.Items.Clear();
+            ObjMkvinfo.Get(ObjMkvinfo.FilePath);
+        }
     }
 }

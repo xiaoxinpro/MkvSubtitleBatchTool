@@ -111,7 +111,7 @@
             this.toolStripTextBoxName,
             this.toolStripComboBoxLanguage});
             this.menuListViewTarck.Name = "contextMenuStrip1";
-            this.menuListViewTarck.Size = new System.Drawing.Size(182, 180);
+            this.menuListViewTarck.Size = new System.Drawing.Size(182, 202);
             this.menuListViewTarck.Text = "轨道列表右键菜单";
             this.menuListViewTarck.Opening += new System.ComponentModel.CancelEventHandler(this.menuListViewTarck_Opening);
             // 
@@ -121,6 +121,7 @@
             this.toolStripMenuItemReload.Size = new System.Drawing.Size(181, 22);
             this.toolStripMenuItemReload.Tag = "0";
             this.toolStripMenuItemReload.Text = "刷新";
+            this.toolStripMenuItemReload.Click += new System.EventHandler(this.toolStripMenuItemReload_Click);
             // 
             // toolStripMenuItemOutput
             // 
