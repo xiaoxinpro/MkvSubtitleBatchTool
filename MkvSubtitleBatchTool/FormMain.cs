@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace MkvSubtitleBatchTool
 {
@@ -158,5 +159,102 @@ namespace MkvSubtitleBatchTool
         }
         #endregion
 
+        #region 轨道列表菜单相关函数
+        /// <summary>
+        /// 菜单打开时发生
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuListViewTarck_Opening(object sender, CancelEventArgs e)
+        {
+            ContextMenuStrip menuStrip = (ContextMenuStrip)sender;
+            if (listViewTrack.SelectedItems.Count > 0)
+            {
+                int numTag = 2;
+                if (listViewTrack.SelectedItems.Count > 1 || listViewTrack.SelectedItems[0].SubItems[1].Text != "subtitles")
+                {
+                    numTag = 0;
+                }
+                for (int i = 0; i < menuStrip.Items.Count; i++)
+                {
+                    menuStrip.Items[i].Visible = (Convert.ToInt32(menuStrip.Items[i].Tag) <= numTag);
+                    if (menuStrip.Items[i].Name == "toolStripTextBoxName")
+                    {
+                        menuStrip.Items[i].Text = "修改名称";
+                    }
+                    else if (menuStrip.Items[i].Name == "toolStripComboBoxLanguage")
+                    {
+                        menuStrip.Items[i].Text = "修改语言";
+                    }
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        /// <summary>
+        /// 触发名称修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripTextBoxName_Click(object sender, EventArgs e)
+        {
+            ToolStripTextBox text = (ToolStripTextBox)sender;
+            if (text.Text == "修改名称")
+            {
+                text.Text = listViewTrack.SelectedItems[0].SubItems[5].Text;
+                text.Select(text.TextLength, 0);
+            }
+        }
+
+        /// <summary>
+        /// 名称修改事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripTextBoxName_TextChanged(object sender, EventArgs e)
+        {
+            ToolStripTextBox text = (ToolStripTextBox)sender;
+            if (text.Text != "修改名称")
+            {
+                listViewTrack.SelectedItems[0].SubItems[5].Text = text.Text;
+            }
+        }
+
+        /// <summary>
+        /// 设置语言选择框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripComboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ToolStripComboBox combo = (ToolStripComboBox)sender;
+            string strLanguage = Regex.Match(combo.Text, @"(?<=\()\w+(?=\))").Value;
+            if (strLanguage.Length > 1)
+            {
+                listViewTrack.SelectedItems[0].SubItems[3].Text = strLanguage.Trim();
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 设为默认按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemDefault_Click(object sender, EventArgs e)
+        {
+            string defaultTarckId = listViewTrack.SelectedItems[0].Text;
+            for (int i = 0; i < listViewTrack.Items.Count; i++)
+            {
+                if (listViewTrack.Items[i].SubItems[1].Text == "subtitles")
+                {
+                    listViewTrack.Items[i].SubItems[4].Text = (listViewTrack.Items[i].Text == defaultTarckId).ToString();
+                }
+            }
+        }
     }
 }

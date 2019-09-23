@@ -28,14 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listViewTrack = new System.Windows.Forms.ListView();
+            this.menuListViewTarck = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemReload = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemOutput = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemUpMove = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDownMove = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemDefault = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBoxName = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripComboBoxLanguage = new System.Windows.Forms.ToolStripComboBox();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageSimpleFile = new System.Windows.Forms.TabPage();
             this.btnMixedFlow = new System.Windows.Forms.Button();
             this.tabPageBatchFile = new System.Windows.Forms.TabPage();
+            this.menuListViewTarck.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageSimpleFile.SuspendLayout();
             this.SuspendLayout();
@@ -77,12 +89,106 @@
             this.listViewTrack.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewTrack.ContextMenuStrip = this.menuListViewTarck;
             this.listViewTrack.HideSelection = false;
             this.listViewTrack.Location = new System.Drawing.Point(6, 39);
+            this.listViewTrack.MultiSelect = false;
             this.listViewTrack.Name = "listViewTrack";
             this.listViewTrack.Size = new System.Drawing.Size(559, 256);
             this.listViewTrack.TabIndex = 4;
             this.listViewTrack.UseCompatibleStateImageBehavior = false;
+            // 
+            // menuListViewTarck
+            // 
+            this.menuListViewTarck.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemReload,
+            this.toolStripMenuItemOutput,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemUpMove,
+            this.toolStripMenuItemDownMove,
+            this.toolStripSeparator2,
+            this.toolStripMenuItemDefault,
+            this.toolStripTextBoxName,
+            this.toolStripComboBoxLanguage});
+            this.menuListViewTarck.Name = "contextMenuStrip1";
+            this.menuListViewTarck.Size = new System.Drawing.Size(182, 180);
+            this.menuListViewTarck.Text = "轨道列表右键菜单";
+            this.menuListViewTarck.Opening += new System.ComponentModel.CancelEventHandler(this.menuListViewTarck_Opening);
+            // 
+            // toolStripMenuItemReload
+            // 
+            this.toolStripMenuItemReload.Name = "toolStripMenuItemReload";
+            this.toolStripMenuItemReload.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemReload.Tag = "0";
+            this.toolStripMenuItemReload.Text = "刷新";
+            // 
+            // toolStripMenuItemOutput
+            // 
+            this.toolStripMenuItemOutput.Name = "toolStripMenuItemOutput";
+            this.toolStripMenuItemOutput.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemOutput.Tag = "1";
+            this.toolStripMenuItemOutput.Text = "导出";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator1.Tag = "3";
+            // 
+            // toolStripMenuItemUpMove
+            // 
+            this.toolStripMenuItemUpMove.Name = "toolStripMenuItemUpMove";
+            this.toolStripMenuItemUpMove.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemUpMove.Tag = "3";
+            this.toolStripMenuItemUpMove.Text = "上移";
+            // 
+            // toolStripMenuItemDownMove
+            // 
+            this.toolStripMenuItemDownMove.Name = "toolStripMenuItemDownMove";
+            this.toolStripMenuItemDownMove.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemDownMove.Tag = "3";
+            this.toolStripMenuItemDownMove.Text = "下移";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator2.Tag = "2";
+            // 
+            // toolStripMenuItemDefault
+            // 
+            this.toolStripMenuItemDefault.Name = "toolStripMenuItemDefault";
+            this.toolStripMenuItemDefault.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemDefault.Tag = "2";
+            this.toolStripMenuItemDefault.Text = "设为默认";
+            this.toolStripMenuItemDefault.Click += new System.EventHandler(this.toolStripMenuItemDefault_Click);
+            // 
+            // toolStripTextBoxName
+            // 
+            this.toolStripTextBoxName.Name = "toolStripTextBoxName";
+            this.toolStripTextBoxName.Size = new System.Drawing.Size(100, 23);
+            this.toolStripTextBoxName.Tag = "2";
+            this.toolStripTextBoxName.Text = "修改名称";
+            this.toolStripTextBoxName.ToolTipText = "修改名称";
+            this.toolStripTextBoxName.Click += new System.EventHandler(this.toolStripTextBoxName_Click);
+            this.toolStripTextBoxName.TextChanged += new System.EventHandler(this.toolStripTextBoxName_TextChanged);
+            // 
+            // toolStripComboBoxLanguage
+            // 
+            this.toolStripComboBoxLanguage.AutoToolTip = true;
+            this.toolStripComboBoxLanguage.Items.AddRange(new object[] {
+            "汉语(chi)",
+            "英语(eng)",
+            "日语(jpn)",
+            "法语(fre)",
+            "德语(ger)",
+            "未定(und)"});
+            this.toolStripComboBoxLanguage.Name = "toolStripComboBoxLanguage";
+            this.toolStripComboBoxLanguage.Size = new System.Drawing.Size(121, 25);
+            this.toolStripComboBoxLanguage.Tag = "2";
+            this.toolStripComboBoxLanguage.Text = "修改语言";
+            this.toolStripComboBoxLanguage.ToolTipText = "修改语言";
+            this.toolStripComboBoxLanguage.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxLanguage_SelectedIndexChanged);
             // 
             // tabControlMain
             // 
@@ -144,6 +250,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MKV字幕批量提取与嵌入工具";
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.menuListViewTarck.ResumeLayout(false);
+            this.menuListViewTarck.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
             this.tabPageSimpleFile.ResumeLayout(false);
             this.tabPageSimpleFile.PerformLayout();
@@ -161,6 +269,16 @@
         private System.Windows.Forms.TabPage tabPageSimpleFile;
         private System.Windows.Forms.TabPage tabPageBatchFile;
         private System.Windows.Forms.Button btnMixedFlow;
+        private System.Windows.Forms.ContextMenuStrip menuListViewTarck;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemReload;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOutput;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUpMove;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDownMove;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDefault;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxName;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxLanguage;
     }
 }
 
