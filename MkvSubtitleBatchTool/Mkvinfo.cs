@@ -123,6 +123,18 @@ namespace MkvSubtitleBatchTool
         public string Language { get; set; }
         public string Name { get; set; }
 
+        public MkvinfoTrack(MkvinfoTrack track)
+        {
+            TrackNumber = track.TrackNumber;
+            TrackID = track.TrackID;
+            TrackUID = track.TrackUID;
+            TrackType = track.TrackType;
+            IsDefault = track.IsDefault;
+            CodecID = track.CodecID;
+            Language = track.Language;
+            Name = track.Name;
+        }
+
         public MkvinfoTrack(string strTrack)
         {
             TrackNumber = Convert.ToInt32(Regex.Match(strTrack, @"(?<=Track\snumber:\s+)\d+").Value);

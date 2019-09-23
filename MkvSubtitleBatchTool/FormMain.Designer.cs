@@ -129,6 +129,7 @@
             this.toolStripMenuItemOutput.Size = new System.Drawing.Size(181, 22);
             this.toolStripMenuItemOutput.Tag = "1";
             this.toolStripMenuItemOutput.Text = "导出";
+            this.toolStripMenuItemOutput.Click += new System.EventHandler(this.toolStripMenuItemOutput_Click);
             // 
             // toolStripSeparator1
             // 

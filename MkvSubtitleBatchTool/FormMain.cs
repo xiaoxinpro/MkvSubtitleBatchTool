@@ -270,5 +270,34 @@ namespace MkvSubtitleBatchTool
             listViewTrack.Items.Clear();
             ObjMkvinfo.Get(ObjMkvinfo.FilePath);
         }
+
+        /// <summary>
+        /// 导出按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemOutput_Click(object sender, EventArgs e)
+        {
+            ListViewItem listViewItem = listViewTrack.SelectedItems[0];
+            MkvinfoTrack mkvinfoTrack = new MkvinfoTrack(ObjMkvinfo.Tracks[Convert.ToInt32(listViewItem.Text)]);
+            mkvinfoTrack.TrackID = Convert.ToInt32(listViewItem.Text);
+            mkvinfoTrack.Language = listViewItem.SubItems[3].Text;
+            mkvinfoTrack.IsDefault = Convert.ToBoolean(listViewItem.SubItems[4].Text);
+            mkvinfoTrack.Name = listViewItem.SubItems[5].Text;
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "导出字幕文件";
+            sfd.InitialDirectory = Path.GetDirectoryName(ObjMkvinfo.FilePath);
+            sfd.Filter = @"字幕文件|*." + Regex.Match(mkvinfoTrack.CodecID, @"(?<=\/)\w+").Value.ToLower() + "|文本文件|*.txt|所有文件|*.*";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                string path = sfd.FileName;
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                // 输出文件，调用导出类
+            }
+        }
     }
 }
