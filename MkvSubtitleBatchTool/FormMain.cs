@@ -20,6 +20,7 @@ namespace MkvSubtitleBatchTool
         /// </summary>
         private string MainPath;
         private Mkvinfo ObjMkvinfo;
+        private Mkvextract ObjMkvExtract;
 
         #region 初始化相关
         /// <summary>
@@ -30,6 +31,7 @@ namespace MkvSubtitleBatchTool
             InitializeComponent();
             MainPath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             ObjMkvinfo = new Mkvinfo(GetMkvinfoDoneCallback);
+            ObjMkvExtract = new Mkvextract(MkvExtractCallback);
         }
 
         /// <summary>
@@ -297,7 +299,34 @@ namespace MkvSubtitleBatchTool
                     File.Delete(path);
                 }
                 // 输出文件，调用导出类
+                Mkvextract ObjMkvExtract = new Mkvextract(MkvExtractCallback);
+                ObjMkvExtract.MkvFilePath = ObjMkvinfo.FilePath;
+                ObjMkvExtract.SaveFilePath = path;
+                ObjMkvExtract.Track = mkvinfoTrack;
+                if (ObjMkvExtract.Start(out string msg))
+                {
+
+                }
             }
         }
+
+        #region 导出轨道
+        void MkvExtractCallback(object sender, int rate)
+        {
+            Mkvextract objMkvExtract = (Mkvextract)sender;
+            if (rate < 0)
+            {
+                MessageBox.Show(objMkvExtract.Error);
+            }
+            else if(rate < 100)
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("导出完成");
+            }
+        }
+        #endregion
     }
 }
