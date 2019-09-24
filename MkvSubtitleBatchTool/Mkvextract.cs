@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MkvSubtitleBatchTool
@@ -31,7 +32,7 @@ namespace MkvSubtitleBatchTool
         {
             numProgressRate = 0;
             EventMkvExtarct += e;
-            Cmd = new CmdHelper(p_OutputDataReceived, CmdProcess_Exited);
+            Cmd = new CmdHelper(p_OutputDataReceived, p_ErrorDataReceived, CmdProcess_Exited);
             ShellPath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"mkvtoolnix\mkvextract.exe";
         }
         #endregion
@@ -48,7 +49,7 @@ namespace MkvSubtitleBatchTool
                 err = "MKV文件不存在，无法导出字幕。";
                 return false;
             }
-            else if (Path.GetFileNameWithoutExtension(MkvFilePath).ToLower() != ".mkv")
+            else if (Path.GetExtension(MkvFilePath).ToLower() != ".mkv")
             {
                 err = "不正确的MKV文件，无法导出字幕。";
                 return false;
@@ -67,10 +68,8 @@ namespace MkvSubtitleBatchTool
             {
                 numProgressRate = 1;
                 ActionMkvExtarct();
-                Task.Run(()=>
-                {
-                    Cmd.Send(ShellPath, @"--ui-language en """ + MkvFilePath + @""" " + Track.TrackID + @":""" + SaveFilePath + @""" ");
-                });
+                //Console.WriteLine(ShellPath + @" --ui-language en tracks """ + MkvFilePath + @""" " + Track.TrackID + @":""" + SaveFilePath + @""" ");
+                Cmd.Send(ShellPath, @"--ui-language en tracks """ + MkvFilePath + @""" " + Track.TrackID + @":""" + SaveFilePath + @""" ");
                 err = "开始导出轨道文件...";
                 return true;
             }
@@ -104,9 +103,26 @@ namespace MkvSubtitleBatchTool
         /// <param name="e"></param>
         private void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
+            if (e.Data != null && e.Data.IndexOf("Progress:") == 0)
+            {
+                int progress = Convert.ToInt32(Regex.Match(e.Data, @"(?<=Progress:\s+)\d+").Value);
+                numProgressRate = progress < 1 ? 1 : progress;
+                ActionMkvExtarct();
+            }
+        }
+
+        /// <summary>
+        /// CMD错误回调函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            // 导出异常时触发
             if (e.Data != null)
             {
-                Console.WriteLine(e.Data);
+                ActionMkvExtarct(e.Data);
+                Console.WriteLine("Error ->" + e.Data);
             }
         }
 
@@ -117,9 +133,10 @@ namespace MkvSubtitleBatchTool
         /// <param name="e"></param>
         private void CmdProcess_Exited(object sender, EventArgs e)
         {
-            // 执行结束后触发
+            // 执行结束后触发(导出过程不会触发)
             numProgressRate = 100;
             ActionMkvExtarct();
+            Console.WriteLine("Done");
         }
         #endregion
     }
