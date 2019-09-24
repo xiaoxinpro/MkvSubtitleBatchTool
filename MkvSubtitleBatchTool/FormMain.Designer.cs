@@ -47,6 +47,7 @@
             this.tabPageSimpleFile = new System.Windows.Forms.TabPage();
             this.btnMixedFlow = new System.Windows.Forms.Button();
             this.tabPageBatchFile = new System.Windows.Forms.TabPage();
+            this.progressTrack = new System.Windows.Forms.ProgressBar();
             this.menuListViewTarck.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageSimpleFile.SuspendLayout();
@@ -213,6 +214,7 @@
             this.tabPageSimpleFile.Controls.Add(this.btnOpenFile);
             this.tabPageSimpleFile.Controls.Add(this.txtPath);
             this.tabPageSimpleFile.Controls.Add(this.label1);
+            this.tabPageSimpleFile.Controls.Add(this.progressTrack);
             this.tabPageSimpleFile.Location = new System.Drawing.Point(4, 22);
             this.tabPageSimpleFile.Name = "tabPageSimpleFile";
             this.tabPageSimpleFile.Padding = new System.Windows.Forms.Padding(3);
@@ -241,6 +243,14 @@
             this.tabPageBatchFile.TabIndex = 1;
             this.tabPageBatchFile.Text = "批量处理";
             this.tabPageBatchFile.UseVisualStyleBackColor = true;
+            // 
+            // progressTrack
+            // 
+            this.progressTrack.Location = new System.Drawing.Point(6, 301);
+            this.progressTrack.Name = "progressTrack";
+            this.progressTrack.Size = new System.Drawing.Size(559, 24);
+            this.progressTrack.TabIndex = 6;
+            this.progressTrack.Visible = false;
             // 
             // FormMain
             // 
@@ -281,6 +291,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDefault;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxName;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxLanguage;
+        private System.Windows.Forms.ProgressBar progressTrack;
     }
 }
 

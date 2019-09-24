@@ -306,6 +306,10 @@ namespace MkvSubtitleBatchTool
                 if (ObjMkvExtract.Start(out string msg))
                 {
                     // 开始转换
+                    progressTrack.Maximum = 100;
+                    progressTrack.Value = 0;
+                    progressTrack.Visible = true;
+                    progressTrack.BringToFront();
                 }
             }
         }
@@ -314,18 +318,23 @@ namespace MkvSubtitleBatchTool
         void MkvExtractCallback(object sender, int rate)
         {
             Mkvextract objMkvExtract = (Mkvextract)sender;
-            if (rate < 0)
+            this.Invoke(new Action(() =>
             {
-                MessageBox.Show(objMkvExtract.Error);
-            }
-            else if(rate < 100)
-            {
-
-            }
-            else
-            {
-                MessageBox.Show("导出完成");
-            }
+                if (rate < 0)
+                {
+                    MessageBox.Show(objMkvExtract.Error);
+                }
+                else if (rate < 100)
+                {
+                    progressTrack.Value = rate;
+                }
+                else
+                {
+                    progressTrack.Value = progressTrack.Maximum;
+                    MessageBox.Show("导出完成");
+                    progressTrack.Visible = false;
+                }
+            }));
         }
         #endregion
     }
