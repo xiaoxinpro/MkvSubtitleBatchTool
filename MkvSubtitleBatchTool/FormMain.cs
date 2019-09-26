@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace MkvSubtitleBatchTool
 {
@@ -331,8 +332,18 @@ namespace MkvSubtitleBatchTool
                 else
                 {
                     progressTrack.Value = progressTrack.Maximum;
-                    MessageBox.Show("导出完成");
-                    progressTrack.Visible = false;
+                    Task.Run(() =>
+                    {
+                        Thread.Sleep(555);
+                        this.Invoke(new Action(() =>
+                        {
+                            if(MessageBox.Show("字幕文件导出完成，是否需要打开输出文件夹？", "导出成功", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                            {
+                                System.Diagnostics.Process.Start(Path.GetDirectoryName(objMkvExtract.SaveFilePath));
+                            }
+                            progressTrack.Visible = false;
+                        }));
+                    });
                 }
             }));
         }
