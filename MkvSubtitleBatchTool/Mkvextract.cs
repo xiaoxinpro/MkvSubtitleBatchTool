@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MkvSubtitleBatchTool
@@ -107,6 +108,10 @@ namespace MkvSubtitleBatchTool
             {
                 int progress = Convert.ToInt32(Regex.Match(e.Data, @"(?<=Progress:\s+)\d+").Value);
                 numProgressRate = progress < 1 ? 1 : progress;
+                if (numProgressRate >= 100)
+                {
+                    Thread.Sleep(500);
+                }
                 ActionMkvExtarct();
             }
         }
