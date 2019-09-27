@@ -64,15 +64,16 @@ namespace MkvSubtitleBatchTool
             listView.View = View.Details;
 
             //创建列表头
-            listView.Columns.Add("轨道ID", 60, HorizontalAlignment.Center);
-            listView.Columns.Add("类型", 80, HorizontalAlignment.Left);
-            listView.Columns.Add("编码格式", 130, HorizontalAlignment.Left);
+            listView.Columns.Add("轨道ID", 55, HorizontalAlignment.Center);
+            listView.Columns.Add("类型", 75, HorizontalAlignment.Left);
+            listView.Columns.Add("编码格式", 110, HorizontalAlignment.Left);
             listView.Columns.Add("语言", 50, HorizontalAlignment.Left);
             listView.Columns.Add("默认", 50, HorizontalAlignment.Left);
-            listView.Columns.Add("名称", 100, HorizontalAlignment.Left);
+            listView.Columns.Add("名称", 80, HorizontalAlignment.Left);
+            listView.Columns.Add("替换", 70, HorizontalAlignment.Left);
 
             //自动列宽
-            listView.Columns[5].Width = -2;//根据标题设置宽度
+            listView.Columns[6].Width = -2;//根据标题设置宽度
         }
 
         /// <summary>
@@ -171,12 +172,12 @@ namespace MkvSubtitleBatchTool
         private void menuListViewTarck_Opening(object sender, CancelEventArgs e)
         {
             ContextMenuStrip menuStrip = (ContextMenuStrip)sender;
-            if (listViewTrack.SelectedItems.Count > 0)
+            if (listViewTrack.Items.Count > 0)
             {
-                int numTag = 2;
-                if (listViewTrack.SelectedItems.Count > 1 || listViewTrack.SelectedItems[0].SubItems[1].Text != "subtitles")
+                int numTag = 0;
+                if (listViewTrack.SelectedItems[0].SubItems[1].Text == "subtitles")
                 {
-                    numTag = 0;
+                    numTag = 2;
                 }
                 for (int i = 0; i < menuStrip.Items.Count; i++)
                 {
@@ -240,8 +241,6 @@ namespace MkvSubtitleBatchTool
                 listViewTrack.SelectedItems[0].SubItems[3].Text = strLanguage.Trim();
             }
         }
-
-        #endregion
 
         /// <summary>
         /// 设为默认按钮事件
@@ -315,7 +314,14 @@ namespace MkvSubtitleBatchTool
             }
         }
 
+        #endregion
+
         #region 导出轨道
+        /// <summary>
+        /// 轨道导出流程中的回调函数
+        /// </summary>
+        /// <param name="sender">Mkvextract原型</param>
+        /// <param name="rate">进度0-100</param>
         void MkvExtractCallback(object sender, int rate)
         {
             Mkvextract objMkvExtract = (Mkvextract)sender;

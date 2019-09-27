@@ -37,8 +37,6 @@
             this.toolStripMenuItemReload = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOutput = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemUpMove = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemDownMove = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemDefault = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBoxName = new System.Windows.Forms.ToolStripTextBox();
@@ -46,8 +44,10 @@
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageSimpleFile = new System.Windows.Forms.TabPage();
             this.btnMixedFlow = new System.Windows.Forms.Button();
-            this.tabPageBatchFile = new System.Windows.Forms.TabPage();
             this.progressTrack = new System.Windows.Forms.ProgressBar();
+            this.tabPageBatchFile = new System.Windows.Forms.TabPage();
+            this.toolStripMenuItemReplace = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.menuListViewTarck.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageSimpleFile.SuspendLayout();
@@ -103,16 +103,16 @@
             // 
             this.menuListViewTarck.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemReload,
-            this.toolStripMenuItemOutput,
             this.toolStripSeparator1,
-            this.toolStripMenuItemUpMove,
-            this.toolStripMenuItemDownMove,
+            this.toolStripMenuItemOutput,
+            this.toolStripMenuItemAdd,
+            this.toolStripMenuItemReplace,
             this.toolStripSeparator2,
             this.toolStripMenuItemDefault,
             this.toolStripTextBoxName,
             this.toolStripComboBoxLanguage});
             this.menuListViewTarck.Name = "contextMenuStrip1";
-            this.menuListViewTarck.Size = new System.Drawing.Size(182, 202);
+            this.menuListViewTarck.Size = new System.Drawing.Size(182, 180);
             this.menuListViewTarck.Text = "轨道列表右键菜单";
             this.menuListViewTarck.Opening += new System.ComponentModel.CancelEventHandler(this.menuListViewTarck_Opening);
             // 
@@ -136,21 +136,7 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
-            this.toolStripSeparator1.Tag = "3";
-            // 
-            // toolStripMenuItemUpMove
-            // 
-            this.toolStripMenuItemUpMove.Name = "toolStripMenuItemUpMove";
-            this.toolStripMenuItemUpMove.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItemUpMove.Tag = "3";
-            this.toolStripMenuItemUpMove.Text = "上移";
-            // 
-            // toolStripMenuItemDownMove
-            // 
-            this.toolStripMenuItemDownMove.Name = "toolStripMenuItemDownMove";
-            this.toolStripMenuItemDownMove.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItemDownMove.Tag = "3";
-            this.toolStripMenuItemDownMove.Text = "下移";
+            this.toolStripSeparator1.Tag = "1";
             // 
             // toolStripSeparator2
             // 
@@ -234,6 +220,14 @@
             this.btnMixedFlow.UseVisualStyleBackColor = true;
             this.btnMixedFlow.Click += new System.EventHandler(this.btnMixedFlow_Click);
             // 
+            // progressTrack
+            // 
+            this.progressTrack.Location = new System.Drawing.Point(6, 301);
+            this.progressTrack.Name = "progressTrack";
+            this.progressTrack.Size = new System.Drawing.Size(559, 24);
+            this.progressTrack.TabIndex = 6;
+            this.progressTrack.Visible = false;
+            // 
             // tabPageBatchFile
             // 
             this.tabPageBatchFile.Location = new System.Drawing.Point(4, 22);
@@ -244,13 +238,19 @@
             this.tabPageBatchFile.Text = "批量处理";
             this.tabPageBatchFile.UseVisualStyleBackColor = true;
             // 
-            // progressTrack
+            // toolStripMenuItemReplace
             // 
-            this.progressTrack.Location = new System.Drawing.Point(6, 301);
-            this.progressTrack.Name = "progressTrack";
-            this.progressTrack.Size = new System.Drawing.Size(559, 24);
-            this.progressTrack.TabIndex = 6;
-            this.progressTrack.Visible = false;
+            this.toolStripMenuItemReplace.Name = "toolStripMenuItemReplace";
+            this.toolStripMenuItemReplace.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemReplace.Tag = "1";
+            this.toolStripMenuItemReplace.Text = "替换";
+            // 
+            // toolStripMenuItemAdd
+            // 
+            this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemAdd.Tag = "0";
+            this.toolStripMenuItemAdd.Text = "添加";
             // 
             // FormMain
             // 
@@ -285,13 +285,13 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemReload;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOutput;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUpMove;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDownMove;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDefault;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxName;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxLanguage;
         private System.Windows.Forms.ProgressBar progressTrack;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAdd;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemReplace;
     }
 }
 
