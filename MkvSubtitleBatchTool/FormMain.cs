@@ -70,7 +70,7 @@ namespace MkvSubtitleBatchTool
             listView.Columns.Add("语言", 50, HorizontalAlignment.Left);
             listView.Columns.Add("默认", 50, HorizontalAlignment.Left);
             listView.Columns.Add("名称", 80, HorizontalAlignment.Left);
-            listView.Columns.Add("替换", 70, HorizontalAlignment.Left);
+            listView.Columns.Add("路径", 70, HorizontalAlignment.Left);
 
             //自动列宽
             listView.Columns[6].Width = -2;//根据标题设置宽度
@@ -93,7 +93,7 @@ namespace MkvSubtitleBatchTool
                 listViewItem.SubItems.Add(item.Language);
                 listViewItem.SubItems.Add(item.IsDefault.ToString());
                 listViewItem.SubItems.Add(item.Name);
-                listViewItem.SubItems.Add("");
+                listViewItem.SubItems.Add(string.IsNullOrWhiteSpace(item.Path) ? "" : item.Path);
                 listViewItem.Checked = true;
                 listView.Items.Add(listViewItem);
             }
@@ -331,6 +331,30 @@ namespace MkvSubtitleBatchTool
             {
                 listView.SelectedItems[0].SubItems[6].Text = ofd.FileName.Trim();
                 listView.SelectedItems[0].Checked = true;
+            }
+        }
+
+        /// <summary>
+        /// 添加轨道按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemAdd_Click(object sender, EventArgs e)
+        {
+            ListView listView = listViewTrack;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "选择添加字幕文件";
+            ofd.Filter = @"所有字幕文件|*.ass;*.ssa;*.sub;*.srt;*.usf;*.xml;*.idx;*.vtt|ASS文本字幕|*.ass|SSA文本字幕|*.ssa|SRT文本字幕|*.srt;|USF文本字幕|*.usf;*.xml|PGS/SUB字幕|*.sub";
+            ofd.Multiselect = true; ;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                List<MkvinfoTrack> listMkvinfoTrack = new List<MkvinfoTrack>();
+                foreach (string strPath in ofd.FileNames)
+                {
+                    listMkvinfoTrack.Add(new MkvinfoTrack(listView.Items.Count + listMkvinfoTrack.Count));
+                    listMkvinfoTrack[listMkvinfoTrack.Count - 1].Path = strPath.Trim();
+                }
+                AddTrackListView(listView, listMkvinfoTrack.ToArray());
             }
         }
 

@@ -144,6 +144,7 @@
             this.toolStripMenuItemAdd.Size = new System.Drawing.Size(181, 22);
             this.toolStripMenuItemAdd.Tag = "0";
             this.toolStripMenuItemAdd.Text = "添加";
+            this.toolStripMenuItemAdd.Click += new System.EventHandler(this.toolStripMenuItemAdd_Click);
             // 
             // toolStripMenuItemReplace
             // 

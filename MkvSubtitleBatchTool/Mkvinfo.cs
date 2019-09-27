@@ -114,6 +114,7 @@ namespace MkvSubtitleBatchTool
     /// </summary>
     public class MkvinfoTrack
     {
+        #region 属性
         public int TrackNumber { get; set; }
         public int TrackID { get; set; }
         public decimal TrackUID { get; set; }
@@ -122,6 +123,21 @@ namespace MkvSubtitleBatchTool
         public string CodecID { get; set; }
         public string Language { get; set; }
         public string Name { get; set; }
+        public string Path { get; set; }
+        #endregion
+
+        #region 构造函数
+        public MkvinfoTrack(int trackID, string trackType = "subtitles", string codecID = "", bool isDefault = false, string language = "und", string name = "")
+        {
+            TrackNumber = trackID + 1;
+            TrackID = trackID;
+            TrackUID = 0;
+            TrackType = trackType;
+            IsDefault = isDefault;
+            CodecID = codecID;
+            Language = language;
+            Name = name;
+        }
 
         public MkvinfoTrack(MkvinfoTrack track)
         {
@@ -146,5 +162,7 @@ namespace MkvSubtitleBatchTool
             Language = Regex.Match(strTrack, @"(?<=Language:\s+)\w+").Value.ToString();
             Name = Regex.Match(strTrack, @"(?<=Name:\s+)[\S]+").Value.ToString();
         }
+
+        #endregion
     }
 }
