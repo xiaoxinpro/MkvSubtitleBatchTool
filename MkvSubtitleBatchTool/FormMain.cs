@@ -93,6 +93,7 @@ namespace MkvSubtitleBatchTool
                 listViewItem.SubItems.Add(item.Language);
                 listViewItem.SubItems.Add(item.IsDefault.ToString());
                 listViewItem.SubItems.Add(item.Name);
+                listViewItem.SubItems.Add("");
                 listViewItem.Checked = true;
                 listView.Items.Add(listViewItem);
             }
@@ -175,7 +176,7 @@ namespace MkvSubtitleBatchTool
             if (listViewTrack.Items.Count > 0)
             {
                 int numTag = 0;
-                if (listViewTrack.SelectedItems[0].SubItems[1].Text == "subtitles")
+                if (listViewTrack.SelectedItems.Count > 0 && listViewTrack.SelectedItems[0].SubItems[1].Text == "subtitles")
                 {
                     numTag = 2;
                 }
@@ -311,6 +312,25 @@ namespace MkvSubtitleBatchTool
                     progressTrack.Visible = true;
                     progressTrack.BringToFront();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 替换轨道按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemReplace_Click(object sender, EventArgs e)
+        {
+            ListView listView = listViewTrack;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "选择替换字幕文件";
+            ofd.Filter = @"所有字幕文件|*.ass;*.ssa;*.sub;*.srt;*.usf;*.xml;*.idx;*.vtt|ASS文本字幕|*.ass|SSA文本字幕|*.ssa|SRT文本字幕|*.srt;|USF文本字幕|*.usf;*.xml|PGS/SUB字幕|*.sub";
+            ofd.Multiselect = false; ;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                listView.SelectedItems[0].SubItems[6].Text = ofd.FileName.Trim();
+                listView.SelectedItems[0].Checked = true;
             }
         }
 

@@ -35,8 +35,10 @@
             this.listViewTrack = new System.Windows.Forms.ListView();
             this.menuListViewTarck = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemReload = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemOutput = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemOutput = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemReplace = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemDefault = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBoxName = new System.Windows.Forms.ToolStripTextBox();
@@ -46,8 +48,6 @@
             this.btnMixedFlow = new System.Windows.Forms.Button();
             this.progressTrack = new System.Windows.Forms.ProgressBar();
             this.tabPageBatchFile = new System.Windows.Forms.TabPage();
-            this.toolStripMenuItemReplace = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.menuListViewTarck.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageSimpleFile.SuspendLayout();
@@ -112,7 +112,7 @@
             this.toolStripTextBoxName,
             this.toolStripComboBoxLanguage});
             this.menuListViewTarck.Name = "contextMenuStrip1";
-            this.menuListViewTarck.Size = new System.Drawing.Size(182, 180);
+            this.menuListViewTarck.Size = new System.Drawing.Size(182, 202);
             this.menuListViewTarck.Text = "轨道列表右键菜单";
             this.menuListViewTarck.Opening += new System.ComponentModel.CancelEventHandler(this.menuListViewTarck_Opening);
             // 
@@ -124,6 +124,12 @@
             this.toolStripMenuItemReload.Text = "刷新";
             this.toolStripMenuItemReload.Click += new System.EventHandler(this.toolStripMenuItemReload_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator1.Tag = "1";
+            // 
             // toolStripMenuItemOutput
             // 
             this.toolStripMenuItemOutput.Name = "toolStripMenuItemOutput";
@@ -132,11 +138,20 @@
             this.toolStripMenuItemOutput.Text = "导出";
             this.toolStripMenuItemOutput.Click += new System.EventHandler(this.toolStripMenuItemOutput_Click);
             // 
-            // toolStripSeparator1
+            // toolStripMenuItemAdd
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
-            this.toolStripSeparator1.Tag = "1";
+            this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
+            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemAdd.Tag = "0";
+            this.toolStripMenuItemAdd.Text = "添加";
+            // 
+            // toolStripMenuItemReplace
+            // 
+            this.toolStripMenuItemReplace.Name = "toolStripMenuItemReplace";
+            this.toolStripMenuItemReplace.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemReplace.Tag = "1";
+            this.toolStripMenuItemReplace.Text = "替换";
+            this.toolStripMenuItemReplace.Click += new System.EventHandler(this.toolStripMenuItemReplace_Click);
             // 
             // toolStripSeparator2
             // 
@@ -237,20 +252,6 @@
             this.tabPageBatchFile.TabIndex = 1;
             this.tabPageBatchFile.Text = "批量处理";
             this.tabPageBatchFile.UseVisualStyleBackColor = true;
-            // 
-            // toolStripMenuItemReplace
-            // 
-            this.toolStripMenuItemReplace.Name = "toolStripMenuItemReplace";
-            this.toolStripMenuItemReplace.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItemReplace.Tag = "1";
-            this.toolStripMenuItemReplace.Text = "替换";
-            // 
-            // toolStripMenuItemAdd
-            // 
-            this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
-            this.toolStripMenuItemAdd.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItemAdd.Tag = "0";
-            this.toolStripMenuItemAdd.Text = "添加";
             // 
             // FormMain
             // 
