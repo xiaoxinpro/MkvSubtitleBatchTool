@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Threading;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MkvSubtitleBatchTool
 {
@@ -22,6 +15,7 @@ namespace MkvSubtitleBatchTool
         private string MainPath;
         private Mkvinfo ObjMkvinfo;
         private Mkvextract ObjMkvExtract;
+        private List<MkvinfoTrack> ListMkvinfoTrack = new List<MkvinfoTrack>();
 
         #region 初始化相关
         /// <summary>
@@ -55,6 +49,8 @@ namespace MkvSubtitleBatchTool
         /// <param name="listView"></param>
         private void InitTrackListView(ListView listView)
         {
+            ListMkvinfoTrack.Clear();
+
             //基本属性设置
             listView.Clear();
             listView.FullRowSelect = true;
@@ -81,8 +77,9 @@ namespace MkvSubtitleBatchTool
         /// </summary>
         /// <param name="listView"></param>
         /// <param name="track"></param>
-        private void AddTrackListView(ListView listView, params MkvinfoTrack[] track)
+        private void UpdataTrackListView(ListView listView, params MkvinfoTrack[] track)
         {
+            listView.Items.Clear();
             listView.BeginUpdate();
             foreach (MkvinfoTrack item in track)
             {
@@ -159,7 +156,8 @@ namespace MkvSubtitleBatchTool
                 btnOpenFile.Enabled = true;
                 btnOpenFile.Text = "打开文件";
                 InitTrackListView(listViewTrack);
-                AddTrackListView(listViewTrack, mkvinfo.Tracks);
+                ListMkvinfoTrack.AddRange(mkvinfo.Tracks);
+                UpdataTrackListView(listViewTrack, mkvinfo.Tracks);
             }));
         }
         #endregion
@@ -348,13 +346,12 @@ namespace MkvSubtitleBatchTool
             ofd.Multiselect = true; ;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                List<MkvinfoTrack> listMkvinfoTrack = new List<MkvinfoTrack>();
                 foreach (string strPath in ofd.FileNames)
                 {
-                    listMkvinfoTrack.Add(new MkvinfoTrack(listView.Items.Count + listMkvinfoTrack.Count));
-                    listMkvinfoTrack[listMkvinfoTrack.Count - 1].Path = strPath.Trim();
+                    ListMkvinfoTrack.Add(new MkvinfoTrack(ListMkvinfoTrack.Count));
+                    ListMkvinfoTrack[ListMkvinfoTrack.Count - 1].Path = strPath.Trim();
                 }
-                AddTrackListView(listView, listMkvinfoTrack.ToArray());
+                UpdataTrackListView(listView, ListMkvinfoTrack.ToArray());
             }
         }
 

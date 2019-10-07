@@ -102,6 +102,7 @@ namespace MkvSubtitleBatchTool
             for (int i = 1; i < arrTrack.Length; i++)
             {
                 listTrack.Add(new MkvinfoTrack(arrTrack[i]));
+                listTrack[listTrack.Count - 1].Path = FilePath;
             }
             Tracks = listTrack.ToArray();
             ActionGetMkvinfoDone();
