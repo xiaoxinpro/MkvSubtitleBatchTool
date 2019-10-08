@@ -98,6 +98,7 @@
             this.listViewTrack.Size = new System.Drawing.Size(559, 256);
             this.listViewTrack.TabIndex = 4;
             this.listViewTrack.UseCompatibleStateImageBehavior = false;
+            this.listViewTrack.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewTrack_ItemChecked);
             // 
             // menuListViewTarck
             // 
@@ -112,7 +113,7 @@
             this.toolStripTextBoxName,
             this.toolStripComboBoxLanguage});
             this.menuListViewTarck.Name = "contextMenuStrip1";
-            this.menuListViewTarck.Size = new System.Drawing.Size(182, 202);
+            this.menuListViewTarck.Size = new System.Drawing.Size(182, 180);
             this.menuListViewTarck.Text = "轨道列表右键菜单";
             this.menuListViewTarck.Opening += new System.ComponentModel.CancelEventHandler(this.menuListViewTarck_Opening);
             // 

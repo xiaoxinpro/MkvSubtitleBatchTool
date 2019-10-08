@@ -96,6 +96,17 @@ namespace MkvSubtitleBatchTool
             }
             listView.EndUpdate();
         }
+
+        /// <summary>
+        /// 列表使能状态改变事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewTrack_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            ListMkvinfoTrack[e.Item.Index].IsDelete = !e.Item.Checked;
+        }
+
         #endregion
 
         #region 窗体控件相关
@@ -137,7 +148,8 @@ namespace MkvSubtitleBatchTool
         /// <param name="e"></param>
         private void btnMixedFlow_Click(object sender, EventArgs e)
         {
-
+            Mkvmerge mkvmerge = new Mkvmerge();
+            mkvmerge.MixedFlow(txtPath.Text, ListMkvinfoTrack.ToArray());
         }
 
         #endregion
@@ -388,5 +400,6 @@ namespace MkvSubtitleBatchTool
             }));
         }
         #endregion
+
     }
 }

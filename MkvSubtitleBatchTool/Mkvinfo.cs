@@ -125,6 +125,7 @@ namespace MkvSubtitleBatchTool
         public string Language { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
+        public bool IsDelete { get; set; } = false;
         #endregion
 
         #region 构造函数
