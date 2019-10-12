@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,17 +51,57 @@ namespace MkvSubtitleBatchTool
         {
             StringBuilder sb = new StringBuilder();
             bool isNoSubtitle = true;
+            StringBuilder sbSubtitleTrack = new StringBuilder(" --subtitle-tracks ");
+            bool isDeleteItem = false;
             //判断是否有no项目
+            string bakPath = tracks.Length > 0 ? tracks[0].Path : "";
             foreach (MkvinfoTrack itemTrack in tracks)
             {
-                if (itemTrack.TrackType == "subtitles" && itemTrack.IsDelete == false)
+                if (bakPath != itemTrack.Path)
                 {
-                    isNoSubtitle = false;
+                    sb.Append(" ( \"" + bakPath + "\" ) ");
+                    bakPath = itemTrack.Path;
+                }
+                if (itemTrack.TrackType == "subtitles")
+                {
+                    if (Path.GetExtension(itemTrack.Path).ToLower() == ".mkv")
+                    {
+                        if (itemTrack.IsDelete)
+                        {
+                            isDeleteItem = true;
+                        }
+                        else
+                        {
+                            sb.Append("--language " + itemTrack.TrackID + ":" + itemTrack.Language + " ");
+                            if (itemTrack.IsDefault)
+                            {
+                                sb.Append("--default-track " + itemTrack.TrackID + ":yes ");
+                            }
+                            sbSubtitleTrack.Append(itemTrack.TrackID + " ");
+                            isNoSubtitle = false;
+                        }
+                    }
+                    else
+                    {
+                        if (!itemTrack.IsDelete)
+                        {
+                            sb.Append("--language " + itemTrack.TrackID + ":" + itemTrack.Language + " ");
+                            if (itemTrack.IsDefault)
+                            {
+                                sb.Append("--default-track " + itemTrack.TrackID + ":yes ");
+                            }
+                        }
+                    }
                 }
             }
+            sb.Append(" ( \"" + bakPath + "\" ) ");
             if (isNoSubtitle)
             {
                 sb.Insert(0, " --no-subtitles ");
+            }
+            else if (isDeleteItem)
+            {
+                sb.Insert(0, sbSubtitleTrack.ToString());
             }
 
             //
