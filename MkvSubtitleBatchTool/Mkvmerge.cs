@@ -52,7 +52,10 @@ namespace MkvSubtitleBatchTool
             StringBuilder sb = new StringBuilder();
             bool isNoSubtitle = true;
             StringBuilder sbSubtitleTrack = new StringBuilder(" --subtitle-tracks ");
+            StringBuilder sbTrackOrder = new StringBuilder(" --track-order ");
             bool isDeleteItem = false;
+            int numOrderFile = 0;
+            int numOrderTrack = 0;
             //判断是否有no项目
             string bakPath = tracks.Length > 0 ? tracks[0].Path : "";
             foreach (MkvinfoTrack itemTrack in tracks)
@@ -61,6 +64,13 @@ namespace MkvSubtitleBatchTool
                 {
                     sb.Append(" ( \"" + bakPath + "\" ) ");
                     bakPath = itemTrack.Path;
+                    numOrderFile++;
+                    numOrderTrack = 0;
+                }
+                if (itemTrack.IsDelete == false)
+                {
+                    sbTrackOrder.Append(numOrderFile.ToString() + ":" + numOrderTrack.ToString() + ",");
+                    numOrderTrack++;
                 }
                 if (itemTrack.TrackType == "subtitles")
                 {
@@ -95,6 +105,7 @@ namespace MkvSubtitleBatchTool
                 }
             }
             sb.Append(" ( \"" + bakPath + "\" ) ");
+            sb.Append(sbTrackOrder.Remove(sbTrackOrder.Length - 1, 1));
             if (isNoSubtitle)
             {
                 sb.Insert(0, " --no-subtitles ");
@@ -103,7 +114,6 @@ namespace MkvSubtitleBatchTool
             {
                 sb.Insert(0, sbSubtitleTrack.ToString());
             }
-
             //
             return sb.ToString();
         }
