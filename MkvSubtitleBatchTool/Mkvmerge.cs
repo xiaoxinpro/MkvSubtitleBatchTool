@@ -83,6 +83,10 @@ namespace MkvSubtitleBatchTool
                         else
                         {
                             sb.Append("--language " + itemTrack.TrackID + ":" + itemTrack.Language + " ");
+                            if (string.IsNullOrWhiteSpace(itemTrack.Name) == false)
+                            {
+                                sb.Append("--track-name " + itemTrack.TrackID + ":" + itemTrack.Name + " ");
+                            }
                             if (itemTrack.IsDefault)
                             {
                                 sb.Append("--default-track " + itemTrack.TrackID + ":yes ");
@@ -96,6 +100,10 @@ namespace MkvSubtitleBatchTool
                         if (!itemTrack.IsDelete)
                         {
                             sb.Append("--language " + itemTrack.TrackID + ":" + itemTrack.Language + " ");
+                            if (string.IsNullOrWhiteSpace(itemTrack.Name) == false)
+                            {
+                                sb.Append("--track-name " + itemTrack.TrackID + ":" + itemTrack.Name + " ");
+                            }
                             if (itemTrack.IsDefault)
                             {
                                 sb.Append("--default-track " + itemTrack.TrackID + ":yes ");
